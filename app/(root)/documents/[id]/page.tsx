@@ -17,13 +17,13 @@ const Document = async ({ params: { id } }: SearchParamProps) => {
 
   const userIds = Object.keys(room.usersAccesses);
   const users = await getClerkUsers({ userIds });
-console.log(users)
-  const usersData = await users.map(async (user: User) => ({
+  const usersData = users.map((user: User) => ({
     ...user,
-    userType: await room.usersAccesses[user.email]?.includes('room:write')
-      ? 'editor'
-      : 'viewer'
+    userType: room.usersAccesses[user.email]?.includes('room:write')
+    ? 'editor'
+    : 'viewer'
   }))
+  console.log({users,userData: room.usersAccesses[users[0].email]})
 
   const currentUserType = room.usersAccesses[clerkUser.emailAddresses[0].emailAddress]?.includes('room:write') ? 'editor' : 'viewer';
 
